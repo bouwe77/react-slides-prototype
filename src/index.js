@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 import HelloWorld from "./examples/HelloWorld";
 
 function App() {
   const slides = [Slide1, Slide2, Slide3];
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  //======= BEGIN aanpassingen opslaan in local storage =======
+  const getSlideIndex = () => Number(localStorage.getItem("currentSlideIndex")) || 0;
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(getSlideIndex);
+
+  useEffect(() => {
+    localStorage.setItem("currentSlideIndex", currentSlideIndex);
+  }, [currentSlideIndex]);
 
   function goToPrev() {
     if (slides.length > 0 && currentSlideIndex > 0) {
       setCurrentSlideIndex(currentSlideIndex - 1);
     }
   }
+  //======= END aanpassingen opslaan in local storage =======
+
+  //======= BEGIN aanpassingen poll/toggle slide index =======
+  //...
+  //======= END aanpassingen poll/toggle slide index =======
 
   function goToNext() {
     if (currentSlideIndex < slides.length - 1) {
